@@ -64,3 +64,10 @@ export function updateTodo(id, data) {
   storedData[index] = data;
   localStorage.setItem("todos", JSON.stringify(storedData));
 }
+
+// Create Array object
+export const arrayRange = (start, stop, step) =>
+  Array.from(
+    { length: (stop - start) / step + 1 },
+    (value, index) => start + index * step
+  );

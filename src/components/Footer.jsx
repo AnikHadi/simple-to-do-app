@@ -2,8 +2,9 @@
 import { addStatus } from "@/lib/features/filter/filterSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks/hooks";
 import React from "react";
+import PaginationPage from "./PaginationPage";
 
-function Footer() {
+function Footer({ startIndex, endIndex, setStartIndex, setEndIndex }) {
   const todos = useAppSelector((state) => state.todos);
   const filter = useAppSelector((state) => state.filters);
   const dispatch = useAppDispatch();
@@ -20,37 +21,45 @@ function Footer() {
   };
 
   return (
-    <div className="mt-4 flex justify-between text-xs text-gray-500">
-      <p>{taskLeft(task) + " --- | --- Total tasks " + todos?.todo.length}</p>
-      <ul className="flex space-x-1 items-center text-xs">
-        <li
-          className={`cursor-pointer ${filter.status === "all" && "font-bold"}`}
-          onClick={() => dispatch(addStatus("all"))}
-        >
-          All
-        </li>
-        <li>|</li>
-        <li
-          className={`cursor-pointer ${
-            filter.status === "incomplete" && "font-bold"
-          }`}
-          onClick={() => dispatch(addStatus("incomplete"))}
-        >
-          Incomplete
-        </li>
-        <li>|</li>
-        <li
-          className={`cursor-pointer ${
-            filter.status === "complete" && "font-bold"
-          }`}
-          onClick={() => dispatch(addStatus("complete"))}
-        >
-          Complete
-        </li>
-        <li></li>
-        <li></li>
-      </ul>
-    </div>
+    <>
+      <div className="mt-4 flex justify-between text-xs text-gray-500">
+        <p>{taskLeft(task) + " --- | --- Total tasks " + todos?.todo.length}</p>
+        <ul className="flex space-x-1 items-center text-xs">
+          <li
+            className={`cursor-pointer ${
+              filter.status === "all" && "font-bold"
+            }`}
+            onClick={() => dispatch(addStatus("all"))}
+          >
+            All
+          </li>
+          <li>|</li>
+          <li
+            className={`cursor-pointer ${
+              filter.status === "incomplete" && "font-bold"
+            }`}
+            onClick={() => dispatch(addStatus("incomplete"))}
+          >
+            Incomplete
+          </li>
+          <li>|</li>
+          <li
+            className={`cursor-pointer ${
+              filter.status === "complete" && "font-bold"
+            }`}
+            onClick={() => dispatch(addStatus("complete"))}
+          >
+            Complete
+          </li>
+        </ul>
+      </div>
+      <PaginationPage
+        startIndex={startIndex}
+        endIndex={endIndex}
+        setEndIndex={setEndIndex}
+        setStartIndex={setStartIndex}
+      />
+    </>
   );
 }
 

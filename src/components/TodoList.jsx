@@ -3,7 +3,7 @@ import { useAppDispatch, useAppSelector } from "@/lib/hooks/hooks";
 import React from "react";
 import Todo from "./todo";
 
-function TodoList() {
+function TodoList({ startIndex, endIndex, page }) {
   const todos = useAppSelector((state) => state.todos);
   const filter = useAppSelector((state) => state.filters);
   const { status, searchText } = filter;
@@ -28,9 +28,12 @@ function TodoList() {
   };
   return (
     <div className="mt-2 text-gray-700 text-sm max-h-[300px] overflow-y-auto">
-      {todos?.todo?.filter(filterByStatus).map((todo) => (
-        <Todo todo={todo} key={todo.id} />
-      ))}
+      {todos?.todo
+        ?.filter(filterByStatus)
+        .slice(startIndex, endIndex)
+        .map((todo) => (
+          <Todo todo={todo} key={todo.id} />
+        ))}
     </div>
   );
 }

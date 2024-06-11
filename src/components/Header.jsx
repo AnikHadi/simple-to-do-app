@@ -9,18 +9,20 @@ import { addTodo, editTodo } from "@/lib/features/todo/todoSlice";
 import { getSingleTodo } from "@/lib/utils";
 import { useRouter, useSearchParams } from "next/navigation";
 
+const emptyVal = {
+  id: "",
+  title: "",
+  complete: "",
+  description: "",
+};
+
 function Header() {
   const dispatch = useAppDispatch();
   const searchParams = useSearchParams();
   const getParam = searchParams.get("edit");
   const router = useRouter();
 
-  const [formData, setFormData] = useState({
-    id: "",
-    title: "",
-    complete: "",
-    description: "",
-  });
+  const [formData, setFormData] = useState(emptyVal);
 
   // Handle input change
   const handleChange = (e) => {
@@ -33,15 +35,15 @@ function Header() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // const data = setStoredData("todos", formData);
 
     if (!getParam) {
       dispatch(addTodo(formData));
+      setFormData(emptyVal);
     } else {
       dispatch(editTodo({ id: Number(getParam), data: formData }));
       router.push("/");
+      setFormData(emptyVal);
     }
-    e.target.reset();
   };
 
   useEffect(() => {
