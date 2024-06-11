@@ -2,7 +2,6 @@ import {
   deleteLocalStorageTodo,
   setStoredData,
   updateStatus,
-  updateStatusHelper,
   updateTodo,
 } from "@/lib/utils";
 import { createSlice } from "@reduxjs/toolkit";
